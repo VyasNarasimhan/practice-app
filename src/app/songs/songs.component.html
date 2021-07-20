@@ -1,0 +1,32 @@
+<div class="container">
+    <div class="jumbotron text-center">
+        <h1>Practice Log</h1>
+        <button class="btn btn-outline-dark" (click)="launchSongModal({}, 'Add')"><span class="material-icons">add</span>Add new song</button>
+        <button class="btn btn-outline-dark" (click)="launchCategoryModal('', 'Add')"><span class="material-icons">add</span>Add new category</button>
+    </div>
+    <div class="row">
+        <div class="col-lg-3 col-md-6 col-sm-12" *ngFor="let category of songsList">
+            <div class="card mb-3">
+                <div class="card-header">
+                    <div class="row">
+                        <h2 class="col-9 mt-1 mb-1 text-center" (click)="toggleCardBodyShownStatus(category.name)">{{category.name}}</h2>
+                        <button class="col-3 btn btn-outline-dark" (click)="launchCategoryModal(category.name, 'Edit')"><span class="material-icons">mode_edit</span></button>
+                    </div>
+                </div>
+                <div class="card-body" *ngIf="cardBodyShown[category.name]">
+                    <div class={{getAlertStatus(song)}} role="alert" *ngFor="let song of category.songs">
+                        <div class="row">
+                            <div class="col-8" (click)="changeStatus(song.name)">
+                                <b>{{song.name}}</b><br>
+                                <small>{{getDaysSinceMessage(song.date)}}</small>
+                            </div>
+                            <div class="col-4">
+                                <button class="btn btn-outline-dark" (click)="launchSongModal(song, 'Edit')"><span class="material-icons">mode_edit</span></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
