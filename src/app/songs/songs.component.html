@@ -1,8 +1,8 @@
 <div class="container">
     <div class="jumbotron text-center">
         <h1>Practice Log</h1>
-        <button class="btn btn-outline-dark" (click)="launchSongModal({}, 'Add')"><span class="material-icons">add</span>Add new song</button>
-        <button class="btn btn-outline-dark" (click)="launchCategoryModal('', 'Add')"><span class="material-icons">add</span>Add new category</button>
+        <button class="btn btn-outline-dark mr-3 mb-3" (click)="launchSongModal({}, 'Add')"><span class="material-icons">add</span>Add new song</button>
+        <button class="btn btn-outline-dark mr-3 mb-3" (click)="launchCategoryModal('', 'Add')"><span class="material-icons">add</span>Add new category</button>
     </div>
     <div class="row">
         <div class="col-lg-3 col-md-6 col-sm-12" *ngFor="let category of songsList">
@@ -14,9 +14,9 @@
                     </div>
                 </div>
                 <div class="card-body" *ngIf="cardBodyShown[category.name]">
-                    <div class={{getAlertStatus(song)}} role="alert" *ngFor="let song of category.songs">
+                    <div class={{getAlertStatus(song,category.name)}} role="alert" *ngFor="let song of category.songs">
                         <div class="row">
-                            <div class="col-8" (click)="changeStatus(song.name)">
+                            <div class="col-8" (click)="changeStatus(song.name, category.name)">
                                 <b>{{song.name}}</b><br>
                                 <small>{{getDaysSinceMessage(song.date)}}</small>
                             </div>

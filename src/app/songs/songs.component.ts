@@ -20,6 +20,7 @@ export class SongsComponent implements OnInit {
   showModal = false;
 
   ngOnInit(): void {
+    console.log(moment().format('YYYY-MM-DD'));
     this.fileService.getFile().subscribe((resp) => {
       this.songsList = JSON.parse(resp.file);
       for (const category of this.songsList) {
@@ -43,9 +44,9 @@ export class SongsComponent implements OnInit {
 
   // tslint:disable-next-line: typedef
   getDaysSince(stringDate: string) {
-    const date = new Date(stringDate);
-    const today = new Date();
-    return Math.floor((today.getTime() - date.getTime()) / (1000 * 3600 * 24));
+    const date = moment(stringDate);
+    const today = moment();
+    return today.diff(date, 'days');
   }
 
   // tslint:disable-next-line: typedef
@@ -59,10 +60,10 @@ export class SongsComponent implements OnInit {
   }
 
   // tslint:disable-next-line: typedef
-  getAlertStatus(song: any) {
+  getAlertStatus(song: any, songCategory: string) {
     const daysBetween = this.getDaysSince(song.date);
     for (const playedSong of this.playedSongs) {
-      if (song.name === playedSong.name) {
+      if (song.name === playedSong.name && playedSong.category === songCategory) {
         return 'alert alert-primary';
       }
     }
@@ -76,21 +77,24 @@ export class SongsComponent implements OnInit {
   }
 
   // tslint:disable-next-line: typedef
-  changeStatus(songName: string) {
+  changeStatus(songName: string, songCategory: string) {
     let isPlayed = false;
     for (const category of this.songsList) {
-      for (const song of category.songs) {
-        if (song.name === songName) {
-          for (let i = 0; i < this.playedSongs.length; i++) {
-            if (this.playedSongs[i].name === song.name) {
-              song.date = this.playedSongs[i].date;
-              isPlayed = true;
-              this.playedSongs.splice(i, 1);
+      if (category.name === songCategory) {
+        for (const song of category.songs) {
+          if (song.name === songName) {
+            for (let i = 0; i < this.playedSongs.length; i++) {
+              if (this.playedSongs[i].name === song.name) {
+                song.date = this.playedSongs[i].date;
+                isPlayed = true;
+                this.playedSongs.splice(i, 1);
+              }
             }
-          }
-          if (!isPlayed) {
-            this.playedSongs.push({name: song.name, date: song.date});
-            song.date = moment().format('YYYY-MM-DD');
+            if (!isPlayed) {
+              this.playedSongs.push({name: song.name, date: song.date, category: songCategory});
+              console.log(this.playedSongs);
+              song.date = moment().format('YYYY-MM-DD');
+            }
           }
         }
       }
