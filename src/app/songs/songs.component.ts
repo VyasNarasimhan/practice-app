@@ -113,7 +113,7 @@ export class SongsComponent implements OnInit {
         songs: this.songsList,
         label: action,
         name: song.name,
-        composer: song.composer,
+        talam: song.talam,
         ragam: song.ragam,
         categories: allCategories
       }
@@ -124,7 +124,7 @@ export class SongsComponent implements OnInit {
           for (const category of this.songsList) {
             if (category.name === result.values.category) {
               // tslint:disable-next-line: max-line-length
-              category.songs.push({name: result.values.name, date: moment().format('YYYY-MM-DD'), ragam: result.values.ragam, composer: result.values.composer});
+              category.songs.push({name: result.values.name, date: moment().format('YYYY-MM-DD'), ragam: result.values.ragam, talam: result.values.talam});
             }
           }
         } else {
@@ -133,7 +133,7 @@ export class SongsComponent implements OnInit {
               if (category.songs[i].name === song.name) {
                 if (result.action === 'save') {
                   category.songs[i].name = result.values.name;
-                  category.songs[i].composer = result.values.composer;
+                  category.songs[i].talam = result.values.talam;
                   category.songs[i].ragam = result.values.ragam;
                 } else {
                   category.songs.splice(i, 1);

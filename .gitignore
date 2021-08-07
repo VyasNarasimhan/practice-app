@@ -40,7 +40,8 @@ npm-debug.log
 yarn-error.log
 testem.log
 /typings
-/server/SongsLog.json
+src/environments
+server/SongsLog.json
 
 # System Files
 .DS_Store
