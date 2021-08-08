@@ -67,9 +67,9 @@ export class SongsComponent implements OnInit {
         return 'alert alert-primary';
       }
     }
-    if (daysBetween < 7) {
+    if (daysBetween < 14) {
       return 'alert alert-success';
-    } else if (daysBetween < 14) {
+    } else if (daysBetween < 28) {
       return 'alert alert-warning';
     } else {
       return 'alert alert-danger';
