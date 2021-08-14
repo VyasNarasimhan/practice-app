@@ -24,9 +24,9 @@ export class SongsComponent implements OnInit {
 
   ngOnInit(): void {
     this.activatedRoute.queryParams.subscribe(params => {
-      const name = params.name;
-      this.name = name;
-      if (name !== undefined) {
+      if (!!params.name) {
+        const name = params.name;
+        this.name = name;
         this.fileService.getFile({user: name}).subscribe((resp) => {
           this.userIsValid = true;
           this.songsList = JSON.parse(resp.file);
