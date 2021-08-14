@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" *ngIf="userIsValid">
     <div class="jumbotron text-center">
         <h1>Practice Log</h1>
         <button class="btn btn-outline-dark mr-3 mb-3" (click)="launchSongModal({}, 'Add')"><span class="material-icons">add</span>Add new song</button>

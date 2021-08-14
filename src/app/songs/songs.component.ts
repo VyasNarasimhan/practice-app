@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import moment from 'moment';
 import { MatDialog } from '@angular/material/dialog';
 import { ModifySongModalComponent } from '../modify-song-modal/modify-song-modal.component';
@@ -12,23 +13,29 @@ import { FileService } from '../services/file.service';
 })
 export class SongsComponent implements OnInit {
 
-  constructor(public dialog: MatDialog, private fileService: FileService) { }
+  constructor(public dialog: MatDialog, private fileService: FileService, private activatedRoute: ActivatedRoute) { }
   songsList: any;
   cardBodyShown: any = {};
   playedSongs: any = [];
+  name = '';
+  userIsValid = false;
 
   showModal = false;
 
   ngOnInit(): void {
-    console.log(moment().format('YYYY-MM-DD'));
-    this.fileService.getFile().subscribe((resp) => {
-      this.songsList = JSON.parse(resp.file);
-      for (const category of this.songsList) {
-        this.cardBodyShown[category.name] = false;
-        category.songs.sort((a: any, b: any) => {
-          return new Date(a.date).getTime() - new Date(b.date).getTime();
-        });
-      }
+    this.activatedRoute.queryParams.subscribe(params => {
+      const name = params.name;
+      this.name = name;
+      this.fileService.getFile({user: name}).subscribe((resp) => {
+        this.userIsValid = true;
+        this.songsList = JSON.parse(resp.file);
+        for (const category of this.songsList) {
+          this.cardBodyShown[category.name] = false;
+          category.songs.sort((a: any, b: any) => {
+            return new Date(a.date).getTime() - new Date(b.date).getTime();
+          });
+        }
+      });
     });
   }
 
@@ -92,7 +99,6 @@ export class SongsComponent implements OnInit {
             }
             if (!isPlayed) {
               this.playedSongs.push({name: song.name, date: song.date, category: songCategory});
-              console.log(this.playedSongs);
               song.date = moment().format('YYYY-MM-DD');
             }
           }
@@ -177,7 +183,7 @@ export class SongsComponent implements OnInit {
 
   // tslint:disable-next-line: typedef
   writeToFile() {
-    this.fileService.writeToFile(this.songsList).subscribe((resp: any) => {
+    this.fileService.writeToFile({user: this.name, json: this.songsList}).subscribe((resp: any) => {
       if (resp.success) {
         console.log('Saved');
       }

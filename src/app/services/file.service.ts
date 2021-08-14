@@ -10,8 +10,8 @@ export class FileService {
 
   constructor(private http: HttpClient) { }
 
-  getFile(): Observable<any> {
-    return this.http.get(environment.apiRoot + '/practice/file/getFile');
+  getFile(data: any): Observable<any> {
+    return this.http.get(environment.apiRoot + '/practice/file/getFile/' + data.user);
   }
 
   writeToFile(data: any): Observable<any> {
