@@ -26,16 +26,18 @@ export class SongsComponent implements OnInit {
     this.activatedRoute.queryParams.subscribe(params => {
       const name = params.name;
       this.name = name;
-      this.fileService.getFile({user: name}).subscribe((resp) => {
-        this.userIsValid = true;
-        this.songsList = JSON.parse(resp.file);
-        for (const category of this.songsList) {
-          this.cardBodyShown[category.name] = false;
-          category.songs.sort((a: any, b: any) => {
-            return new Date(a.date).getTime() - new Date(b.date).getTime();
-          });
-        }
-      });
+      if (name !== undefined) {
+        this.fileService.getFile({user: name}).subscribe((resp) => {
+          this.userIsValid = true;
+          this.songsList = JSON.parse(resp.file);
+          for (const category of this.songsList) {
+            this.cardBodyShown[category.name] = false;
+            category.songs.sort((a: any, b: any) => {
+              return new Date(a.date).getTime() - new Date(b.date).getTime();
+            });
+          }
+        });
+      }
     });
   }
 
