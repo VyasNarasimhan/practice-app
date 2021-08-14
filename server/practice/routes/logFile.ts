@@ -16,11 +16,15 @@ router.post('/writeToFile', async (req: Request, res: Response, next: NextFuncti
 
 router.get('/getFile/:name', async (req: Request, res: Response, next: NextFunction) => {
   console.log('Inside getFile get');
-  fs.readFile('./server/songslogs/' + req.params.name + 'SongsLog.json', 'utf8', (err: any, data: any) => {
-    if (err) {
-      console.log(err);
-    } else {
-      res.send({ file: data });
-    }
-  });
+  if (fs.existsSync('./server/songslogs/' + req.params.name + 'SongsLog.json')) {
+    fs.readFile('./server/songslogs/' + req.params.name + 'SongsLog.json', 'utf8', (err: any, data: any) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send({ file: data });
+      }
+    });
+  } else {
+    console.log('File does not exist');
+  }
 });
