@@ -185,7 +185,7 @@ export class SongsComponent implements OnInit {
 
   // tslint:disable-next-line: typedef
   writeToFile() {
-    this.fileService.writeToFile({user: this.name, json: this.songsList}).subscribe((resp: any) => {
+    this.fileService.writeToFile({name: this.name, json: this.songsList}).subscribe((resp: any) => {
       if (resp.success) {
         console.log('Saved');
       }
