@@ -1,0 +1,54 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <h2 class="modal-title">Load Songs</h2>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="ngbActiveModal.dismiss('X')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body container">
+        <div class="row">
+            <div class="col btn-group btn-group-toggle" data-toggle="buttons">
+                <label class={{buttonClasses.excel}}>
+                    <input type="radio" name="options" id="login" autocomplete="off" (click)="resetClasses('excel')" checked>Excel
+                </label>
+                <label class={{buttonClasses.json}}>
+                    <input type="radio" name="options" autocomplete="off" (click)="resetClasses('json')">JSON
+                </label>
+                <label class={{buttonClasses.other}}>
+                    <input type="radio" name="options" autocomplete="off" (click)="resetClasses('other')">Other
+                </label>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div *ngIf="optionDisplayed==='excel'" class="col">
+
+            </div>
+            <div *ngIf="optionDisplayed==='json'" class="col">
+                <p class="mb-0">If your songs are stored in a JSON file, it should match this format: </p>
+                <div *ngFor="let line of jsonExample">
+                    <code style="white-space: pre;">{{line}}</code>
+                    <br>
+                </div>
+                <p class="mb-0">Important information: </p>
+                <ul>
+                    <li>Each song can have the following properties (* indicates required properties): name* - string, date* - string, talam - string, ragam - string, composer - string, and metronome speed - number</li>
+                    <li>Your file should be in a <kbd><kbd>.json</kbd></kbd> or <kbd><kbd>.txt</kbd></kbd> format</li>
+                    <li>A good site to use to validate your json is <a href="https://www.jsonlint.com" target="_blank">jsonlint.com</a></li>
+                </ul>
+                <div class="input-group mb-3">
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="input-json" accept=".json, .txt" (change)="onFileSelected($event)">
+                        <label class="custom-file-label" for="input-json">{{fileMessage}}</label>
+                    </div>
+                </div>
+                <button class="btn btn-block btn-outline-secondary mb-3" type="button" (click)="submitJson()">Submit JSON</button>
+                <div class="alert alert-danger" *ngIf="!!jsonError">{{jsonError}}</div>
+                <div class="alert alert-success" *ngIf="!!jsonSuccess">{{jsonSuccess}}</div>
+            </div>
+            <div *ngIf="optionDisplayed==='other'" class="col">
+                <p>If your songs are electronically stored in a different format, feel free to email me at <a href="mailto:reach.vyas.2003@gmail.com">reach.vyas.2003@gmail.com</a> and we can discuss other options.</p>
+            </div>
+        </div>
+    </div>
+</div>

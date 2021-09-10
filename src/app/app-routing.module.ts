@@ -1,14 +1,18 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { SongsComponent } from './songs/songs.component';
+import { HomeComponent } from './home/home.component';
 
 const routes: Routes = [{
   path: 'songs',
   component: SongsComponent
 }, {
+  path: 'home',
+  component: HomeComponent
+}, {
   path: '',
   pathMatch: 'full',
-  redirectTo: 'songs'
+  redirectTo: 'home'
 }];
 
 @NgModule({

@@ -16,6 +16,10 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { ModifySongModalComponent } from './modify-song-modal/modify-song-modal.component';
 import { ModifyCategoriesModalComponent } from './modify-categories-modal/modify-categories-modal.component';
 import { HttpClientModule } from '@angular/common/http';
+import { MatCardModule } from '@angular/material/card';
+import { HomeComponent } from './home/home.component';
+import { LoadSongsComponent } from './load-songs/load-songs.component';
+
 
 
 @NgModule({
@@ -23,7 +27,9 @@ import { HttpClientModule } from '@angular/common/http';
     AppComponent,
     SongsComponent,
     ModifySongModalComponent,
-    ModifyCategoriesModalComponent
+    ModifyCategoriesModalComponent,
+    HomeComponent,
+    LoadSongsComponent
   ],
   imports: [
     BrowserModule,
@@ -38,7 +44,8 @@ import { HttpClientModule } from '@angular/common/http';
     NgbModule,
     MatIconModule,
     MatDialogModule,
-    HttpClientModule
+    HttpClientModule,
+    MatCardModule
   ],
   providers: [],
   bootstrap: [AppComponent]

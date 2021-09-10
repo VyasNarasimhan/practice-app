@@ -20,4 +20,19 @@ export class ModifySongModalComponent implements OnInit {
     this.deletePressed = deleteVal;
   }
 
+  // tslint:disable-next-line: typedef
+  metronomeIsNumeric() {
+    if (!!this.data.metronome) {
+      try {
+        // tslint:disable-next-line: radix
+        parseInt(this.data.metronome);
+      } catch (err) {
+        return false;
+      }
+      return true;
+    } else {
+      return true;
+    }
+  }
+
 }
