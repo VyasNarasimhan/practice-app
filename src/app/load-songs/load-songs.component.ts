@@ -9,6 +9,7 @@ import { FileService } from '../services/file.service';
 })
 export class LoadSongsComponent implements OnInit {
 
+  user: any = {};
   optionDisplayed = 'excel';
   buttonClasses: any = {excel: 'btn btn-primary', json: 'btn btn-outline-primary', other: 'btn btn-outline-primary'};
   excelButtonClass = 'btn btn-primary';
@@ -16,12 +17,14 @@ export class LoadSongsComponent implements OnInit {
   fileMessage = 'Choose file';
   // tslint:disable-next-line: no-bitwise
   songsJson: any = null;
-  jsonError = '';
+  jsonError: any;
   jsonSuccess = '';
 
   constructor(public ngbActiveModal: NgbActiveModal, private fileService: FileService) { }
 
   ngOnInit(): void {
+    const sesUser: any = sessionStorage.getItem('user');
+    this.user = JSON.parse(sesUser);
   }
 
   // tslint:disable-next-line: typedef
@@ -83,7 +86,7 @@ export class LoadSongsComponent implements OnInit {
           }
           if (!error) {
             this.jsonSuccess = 'Valid JSON';
-            this.fileService.loadSongs({songs: json, user: sessionStorage.getItem('user')}).subscribe((resp) => {
+            this.fileService.loadSongs({songs: json, user: JSON.stringify(this.user)}).subscribe((resp) => {
               if (resp.success) {
                 this.jsonSuccess = 'JSON data has been loaded';
               }
