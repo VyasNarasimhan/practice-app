@@ -88,7 +88,7 @@ export class LoadSongsComponent implements OnInit {
             this.jsonSuccess = 'Valid JSON';
             this.fileService.loadSongs({songs: json, user: JSON.stringify(this.user)}).subscribe((resp) => {
               if (resp.success) {
-                this.jsonSuccess = 'JSON data has been loaded';
+                this.jsonSuccess = 'JSON data has been loaded. If you refresh the page, your songs will be loaded onto the screen.';
               }
             });
           }
