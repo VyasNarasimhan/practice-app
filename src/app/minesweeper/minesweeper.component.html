@@ -1,0 +1,29 @@
+<body *ngIf="isLoaded" oncontextmenu="return false;">
+    <div class="container">
+        <div class="row my-3" id="title">
+            <div class="col">
+                <h1>Minesweeper</h1>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div *ngIf="lose" class="alert alert-danger">You lose!</div>
+            <div *ngIf="numBombs <= 0" class="alert alert-success">You win!</div>
+        </div>
+        <div class="row" id="board">
+            <div class="col">
+                <div class="alert alert-info mb-3">Remaining flags: {{numFlags}}</div>
+                <table class="table table-bordered" style="table-layout: fixed;">
+                    <tbody>
+                        <tr *ngFor="let row of board, let i = index">
+                            <td *ngFor="let col of row, let j = index">
+                                <button *ngIf="!col.clicked && !col.display" type="button" class="btn btn-lg btn-light btn-block" (click)="clickCell(i, j)" (auxclick)="flagCell(i, j)"></button>
+                                <div *ngIf="col.clicked && col.display !== 'Flag'" class="text-center">{{col.display}}</div>
+                                <button *ngIf="col.display === 'Flag'" type="button" class="btn btn-light btn-block" (auxclick)="flagCell(i, j)"><span class="material-icons">flag</span></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>

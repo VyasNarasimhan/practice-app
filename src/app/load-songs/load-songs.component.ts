@@ -76,7 +76,7 @@ export class LoadSongsComponent implements OnInit {
                     return;
                   }
                   if (!!song.metronome && typeof song.metronome !== 'number') {
-                    this.jsonError = 'Metronome must be a string';
+                    this.jsonError = 'Metronome must be a number';
                     error = true;
                     return;
                   }

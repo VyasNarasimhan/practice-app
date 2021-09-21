@@ -19,6 +19,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { MatCardModule } from '@angular/material/card';
 import { HomeComponent } from './home/home.component';
 import { LoadSongsComponent } from './load-songs/load-songs.component';
+import { MinesweeperComponent } from './minesweeper/minesweeper.component';
 
 
 
@@ -29,7 +30,8 @@ import { LoadSongsComponent } from './load-songs/load-songs.component';
     ModifySongModalComponent,
     ModifyCategoriesModalComponent,
     HomeComponent,
-    LoadSongsComponent
+    LoadSongsComponent,
+    MinesweeperComponent
   ],
   imports: [
     BrowserModule,
