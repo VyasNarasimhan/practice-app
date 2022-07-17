@@ -32,6 +32,7 @@ export class SongsComponent implements OnInit {
       this.user = JSON.parse(userInfo);
       this.fileService.getSongs(this.user.username).subscribe((resp) => {
         this.songsList = resp.songs;
+        console.log(this.songsList);
         sessionStorage.setItem('songs', JSON.stringify(resp.songs));
         for (const category of this.songsList) {
           this.cardBodyShown[category.id] = false;
@@ -50,9 +51,9 @@ export class SongsComponent implements OnInit {
   }
 
   // tslint:disable-next-line: typedef
-  getDaysSince(stringDate: string) {
+  getDaysSince(stringDate: string) {;
     const date = moment(stringDate);
-    const today = moment();
+    const today = moment().utc();
     return today.diff(date, 'days');
   }
 
@@ -105,7 +106,7 @@ export class SongsComponent implements OnInit {
             }
             if (!unPlayed) {
               this.playedSongs.push({id: song.id, name: song.name, date: song.date, category: categoryId});
-              song.date = moment().format('YYYY-MM-DD');
+              song.date = moment.utc().format('YYYY-MM-DD HH:mm:ss');
               data.id = song.id;
               data.date = song.date;
             }
@@ -145,7 +146,7 @@ export class SongsComponent implements OnInit {
           for (const category of this.songsList) {
             if (category.id === result.values.category) {
               // tslint:disable-next-line: max-line-length
-              const newSong = {id: 0, name: result.values.name, date: moment().format('YYYY-MM-DD'), ragam: result.values.ragam, talam: result.values.talam, composer: result.values.composer, metronome: result.values.metronome, category: category.id};
+              const newSong = {id: 0, name: result.values.name, date: moment.utc().format('YYYY-MM-DD HH:mm:ss'), ragam: result.values.ragam, talam: result.values.talam, composer: result.values.composer, metronome: result.values.metronome, category: category.id};
               this.fileService.editSong({action: 'add', song: newSong, user: this.user}).subscribe((resp) => {
                 newSong.id = resp.id;
                 category.songs.push(newSong);

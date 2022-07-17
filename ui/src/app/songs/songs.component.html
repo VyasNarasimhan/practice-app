@@ -1,10 +1,18 @@
-<div class="container" *ngIf="isLoaded">
-    <div class="jumbotron text-center p-2">
-        <h1 style="font-size: 50px; line-height: normal" class="p-2"><b>Practice Log</b></h1>
-        <button class="btn btn-outline-dark mr-3 mb-3" (click)="launchSongModal({}, 'Add')"><span class="material-icons">add</span>Add new song</button>
-        <button class="btn btn-outline-dark mr-3 mb-3" (click)="launchCategoryModal(0, 'Add')"><span class="material-icons">add</span>Add new category</button>
-        <button *ngIf="songsList.length === 0" class="btn btn-outline-dark mr-3 mb-3" (click)="launchLoadSongsModal()"><span class="material-icons">file_upload</span> Load songs</button>
+<section class="jumbotron text-center">
+    <div class="container">
+        <h1 class="jumbotron-heading"><b>Practice Log</b></h1>
+        <p>
+            <button class="btn btn-outline-dark mr-3 mb-3" (click)="launchSongModal({}, 'Add')"><span class="material-icons">add</span>Add new song</button>
+            <button class="btn btn-outline-dark mr-3 mb-3" (click)="launchCategoryModal(0, 'Add')"><span class="material-icons">add</span>Add new category</button>
+            <button *ngIf="songsList.length === 0" class="btn btn-outline-dark mr-3 mb-3" (click)="launchLoadSongsModal()"><span class="material-icons">file_upload</span> Load songs</button>
+        </p>
+        <p class="lead text-muted">
+            Note: Deleting categories will only work if all the songs in that category have been deleted first.
+        </p>
     </div>
+</section>
+
+<div class="container" *ngIf="isLoaded">
     <div class="row">
         <div class="col-lg-3 col-md-6 col-sm-12" *ngFor="let category of songsList">
             <div class="card mb-3">

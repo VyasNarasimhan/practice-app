@@ -1,0 +1,37 @@
+version: '3.8'
+services:
+  frontend:
+    ports:
+      - '8080:80'
+    image: frontend
+    depends_on:
+      - postgres
+
+  backend:
+    ports:
+      - "4201:4201"
+    image: backend
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:14.1-alpine
+    restart: always
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_DB=musicpracticedb
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./data:/var/lib/postgresql/data
+
+  pgadmin-compose:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "reach.vyas.2003@gmail.com"
+      PGADMIN_DEFAULT_PASSWORD: "toor"
+    ports:
+      - "16543:80"
+    depends_on:
+      - postgres

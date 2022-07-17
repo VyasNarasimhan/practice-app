@@ -91,19 +91,11 @@ router.delete('/deleteCategory/:id', async (req: Request, res: Response, next: N
 
 // tslint:disable-next-line: typedef
 async function getSongsAsJson(username: string) {
-  const songs = (await db.query('SELECT songs.id, songs.name, songs.date, songs.talam, songs.ragam, songs.composer, songs.metronome, categories.name AS category, categories.id AS category_id FROM songs INNER JOIN categories ON categories.id=songs.category_id INNER JOIN users ON users.username=$1 AND users.id=songs.user_id', [username])).rows;
+  const categories = (await db.query('SELECT categories.id, categories.name from categories INNER JOIN users ON users.username=$1 AND users.id=categories.user_id', [username])).rows;
   const result: {name: string, id: number, songs: {}[]}[] = [];
-  for (const song of songs) {
-      let categoryExists = false;
-      for (const category of result) {
-          if (category.name === song.category) {
-              category.songs.push(song);
-              categoryExists = true;
-          }
-      }
-      if (!categoryExists) {
-          result.push({name: song.category, id: song.category_id, songs: [song]});
-      }
+  for (const category of categories) {
+    const retrievedSongs = (await db.query('SELECT * FROM songs WHERE category_id=$1', [category.id])).rows;
+    result.push({name: category.name, id: category.id, songs: retrievedSongs});
   }
   return result;
 }
